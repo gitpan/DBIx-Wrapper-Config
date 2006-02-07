@@ -1,7 +1,7 @@
 # Creation date: 2005-10-23 19:43:33
 # Authors: don
 #
-# Copyright (c) 2005 Don Owens <don@owensnet.com>.  All rights reserved.
+# Copyright (c) 2005 Don Owens <don@regexguy.com>.  All rights reserved.
 
 # This is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.  See perlartistic.
@@ -74,7 +74,7 @@ use 5.006_00;
 
 package DBIx::Wrapper::Config;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use DBIx::Wrapper;
 use XML::Parser::Wrapper;
@@ -153,7 +153,14 @@ sub _read_conf {
         my $dsn;
         my $dsn_attrs = $dsn_element->attrs;
         if ($dsn_attrs and %$dsn_attrs) {
-            $dsn = map { ($_ => $dsn_attrs->{$_}) } keys %$dsn_attrs;
+            my $driver = $dsn_attrs->{driver};
+#             unless (defined($driver)) {
+#                 $driver = 'mysql';
+#             }
+            my @keys = sort grep { $_ ne 'driver' } keys %$dsn_attrs;
+            
+            $dsn = "dbi:$driver:"
+                . join(';', map { "$_=$dsn_attrs->{$_}" } @keys);
         }
         else {
             $dsn = $dsn_element->text;
@@ -189,11 +196,11 @@ DBIx::Wrapper, XML::Parser::Wrapper
 
 =head1 AUTHOR
 
-Don Owens <don@owensnet.com>
+Don Owens <don@regexguy.com>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2005 Don Owens <don@owensnet.com>.  All rights reserved.
+Copyright (c) 2005 Don Owens <don@regexguy.com>.  All rights reserved.
 
 This is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.  See perlartistic.
@@ -209,7 +216,7 @@ PURPOSE.
 
 =head1 VERSION
 
- 0.01
+ 0.02
 
 =cut
 

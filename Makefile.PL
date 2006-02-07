@@ -16,7 +16,7 @@ use Carp;
                   DISTNAME => 'DBIx-Wrapper-Config',
                   VERSION_FROM => 'lib/DBIx/Wrapper/Config.pm',
                   ABSTRACT => 'Config Module for DBIx::Wrapper',
-                  AUTHOR => 'DON OWENS <don@owensnet.com>',
+                  AUTHOR => 'DON OWENS <don@regexguy.com>',
                   PM => { 'lib/DBIx/Wrapper/Config.pm' => '$(INST_LIBDIR)/Config.pm',
                         },
                   dist => { COMPRESS => 'gzip -9f', SUFFIX => 'gz' },
